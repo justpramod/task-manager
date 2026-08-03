@@ -17,12 +17,11 @@ router.get('/', async(req,res)=>{
     try
     {
         const tasks = await Tasks.find({ user: req.userId});
-        if(tasks.length === 0) return res.status(404).json({message: 'Task not found!!'});
         res.status(200).json({tasks});
     }
     catch(e)
     {
-    res.status(500).json({message: 'Invalid Id format'});
+        next(e);
     }
 });
 
@@ -41,7 +40,7 @@ router.put('/:id', async(req, res)=>{
     
     }
     catch(e){
-        res.status(500).json({message: 'Invalid Id format'});
+        next(e);
     }
 });
 
@@ -55,7 +54,7 @@ try{
     
     }
 catch(e){
-        res.status(500).json({message: 'Invalid Id format'});
+     next(e);
     }
 })
 module.exports = router;
